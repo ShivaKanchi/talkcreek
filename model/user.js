@@ -1,8 +1,8 @@
 import { Schema, model, models } from "mongoose";
 
-const UserSchema = newSchema({
+const UserSchema = new Schema({
   email: {
-    type: string,
+    type: String,
     unique: [true, "Email already exists!"],
     required: [true, "Email is required!"],
   },
@@ -15,7 +15,7 @@ const UserSchema = newSchema({
     ],
   },
   image: {
-    type: string,
+    type: String,
   },
 });
 const User = models.User || model("User", UserSchema);
