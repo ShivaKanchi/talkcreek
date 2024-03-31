@@ -39,7 +39,9 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
             className="form_input"
           />
         </label>
-        <div></div>
+        <div className="flex-end mx-3 mb-5 gap-4">
+          <Link href="/">Cancel</Link>
+        </div>
       </form>
     </section>
   );
