@@ -9,7 +9,28 @@ const createTalk = () => {
     talk: "",
     tag: "",
   });
-  const createTalk = async (e) => {};
+  const createTalk = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+    try {
+      const response = await fetch("/api/talk/new", {
+        method: "POST",
+        body: {
+          userId: session?.user.id,
+          talk: post.talk,
+          tag: post.tag,
+        },
+      });
+
+      if (response.ok) {
+        Router.push("/");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setSubmitting(false);
+    }
+  };
   return (
     <Form
       type="Create"
