@@ -6,8 +6,8 @@ export const POST = async (req, res) => {
     await connectDB();
     const newTalk = new Talk({
       creator: userId,
-      talk: talk,
-      tag: tag,
+      talk,
+      tag,
     });
 
     await newTalk.save();

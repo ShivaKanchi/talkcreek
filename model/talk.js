@@ -15,11 +15,9 @@ const TalkSchema = new Schema({
   },
   likes: {
     type: String,
-    required: [true, "Tag is required!"],
   },
   dislikes: {
     type: String,
-    required: [true, "Tag is required!"],
   },
 });
 const Talk = models.Talk || model("Talk", TalkSchema);
