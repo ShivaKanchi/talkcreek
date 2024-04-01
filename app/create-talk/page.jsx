@@ -12,16 +12,21 @@ const createTalk = () => {
     tag: "",
   });
   const createTalk = async (e) => {
+    console.log("body", {
+      userId: session?.user.id,
+      talk: post.talk,
+      tag: post.tag,
+    });
     e.preventDefault();
     setSubmitting(true);
     try {
       const response = await fetch("/api/talk/new", {
         method: "POST",
-        body: {
+        body: JSON.stringify({
           userId: session?.user.id,
           talk: post.talk,
           tag: post.tag,
-        },
+        }),
       });
 
       if (response.ok) {

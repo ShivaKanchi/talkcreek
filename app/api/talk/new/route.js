@@ -1,6 +1,6 @@
 import { connectDB } from "@utils/database";
 import Talk from "@model/talk";
-export const POST = async (req, res) => {
+export const POST = async (req) => {
   const { userId, talk, tag } = await req.json();
   try {
     await connectDB();
