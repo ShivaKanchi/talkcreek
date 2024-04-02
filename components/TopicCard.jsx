@@ -18,16 +18,28 @@ const TopicCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
             height={40}
             className="rounded-full object-contain"
           />
+          <div className="flex flex-col">
+            <h3 className="font-satoshi font-semibold text-gray-900">
+              {post.creator.username}
+            </h3>
+            <p className="font-inter text-sm text-gray-500">
+              {post.creator.email}
+            </p>
+          </div>
         </div>
-        <div className="flex flex-col">
-          <h3 className="font-satoshi font-semibold text-gray-900">
-            {post.creator.username}
-          </h3>
-          <p className="font-inter text-sm text-gray-500">
-            {post.creator.email}
-          </p>
+        <div className="" onClick={() => {}}>
+          {/*  like dislike functionality */}
+          {/* <Image/> */}
         </div>
       </div>
+
+      <p className="my-4 font-satoshi text-sm text-gray-700">{post.talk}</p>
+      <p
+        className="font-inter text-sm blue_gradient cursor-pointer"
+        onClick={() => handleTagClick && handleTagClick(post.tag)}
+      >
+        #{post.tag}
+      </p>
     </div>
   );
 };
