@@ -15,9 +15,9 @@ const MyProfile = () => {
       const response = await fetch(`api/users/${session?.user.id}/posts`);
       const data = await response.json();
       setPosts(data);
-      console.log("got data for profile", data, session);
     };
     if (session?.user.id) fetchPosts();
+    console.log("Data fetch for profile", session, posts);
   }, []);
   const handleEdit = () => {};
   const handleDelete = async () => {};
