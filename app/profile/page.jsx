@@ -1,7 +1,7 @@
 "use client";
 import { useSession } from "next-auth/react";
 
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Profile from "@components/Profile";
 
@@ -10,6 +10,7 @@ const MyProfile = () => {
 
   const [posts, setPosts] = useState([]);
 
+  const router = useRouter();
   useEffect(() => {
     const fetchPosts = async () => {
       const response = await fetch(`api/users/${session?.user.id}/posts`);
@@ -19,8 +20,10 @@ const MyProfile = () => {
     if (session?.user.id) fetchPosts();
     console.log("Data fetch for profile", session, posts);
   }, []);
-  const handleEdit = () => {};
-  const handleDelete = async () => {};
+  const handleEdit = (post) => {
+    router.push(`/update-talk?id=${post._id}`);
+  };
+  const handleDelete = async (post) => {};
   return (
     <Profile
       name="My"
