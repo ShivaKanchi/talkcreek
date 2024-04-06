@@ -1,5 +1,6 @@
 import { connectDB } from "@utils/database";
 import Talk from "@model/talk";
+
 // GET(read)
 export const GET = async (req, { params }) => {
   try {
@@ -38,6 +39,7 @@ export const PATCH = async (req, { params }) => {
     return new Response("Failed to update the topicc", { status: 500 });
   }
 };
+
 // DELETE(...)
 export const DELETE = async (req, { params }) => {
   try {

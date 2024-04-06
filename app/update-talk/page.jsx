@@ -25,40 +25,41 @@ const EditTalk = () => {
     };
     if (talkId) getTopicData();
   }, [talkId]);
-  //   const createTalk = async (e) => {
-  //     console.log("body", {
-  //       userId: session?.user.id,
-  //       talk: post.talk,
-  //       tag: post.tag,
-  //     });
-  //     e.preventDefault();
-  //     setSubmitting(true);
-  //     try {
-  //       const response = await fetch("/api/talk/new", {
-  //         method: "POST",
-  //         body: JSON.stringify({
-  //           userId: session?.user.id,
-  //           talk: post.talk,
-  //           tag: post.tag,
-  //         }),
-  //       });
+  const updateTalk = async (e) => {
+    console.log("body", {
+      userId: session?.user.id,
+      talk: post.talk,
+      tag: post.tag,
+    });
+    e.preventDefault();
+    setSubmitting(true);
 
-  //       if (response.ok) {
-  //         router.push("/");
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     } finally {
-  //       setSubmitting(false);
-  //     }
-  //   };
+    if (!talkId) return alert("talk id not found");
+    try {
+      const response = await fetch(` /api/talk/${talkId}`, {
+        method: "PATCH",
+        body: JSON.stringify({
+          talk: post.talk,
+          tag: post.tag,
+        }),
+      });
+
+      if (response.ok) {
+        router.push("/");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setSubmitting(false);
+    }
+  };
   return (
     <Form
-      type="Create"
+      type="Edit"
       post={post}
       setPost={setPost}
       submitting={submitting}
-      handleSubmit={() => {}}
+      handleSubmit={updateTalk}
     />
   );
 };
