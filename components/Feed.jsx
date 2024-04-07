@@ -15,6 +15,9 @@ const Feed = () => {
   const [posts, setPosts] = useState([]);
   // Search
   const [searchText, setSearchText] = useState("");
+  const [searchTimeout, setSearchTimeout] = useState(null);
+  const [searchedResults, setSearchedResults] = useState([]);
+
   const fetchPosts = async () => {
     const response = await fetch("/api/talk");
     const data = await response.json();
@@ -24,7 +27,32 @@ const Feed = () => {
     fetchPosts();
   }, []);
 
-  const handleSearchChange = (e) => {};
+  const filterTopics = (searchText) => {
+    const searchRegex = new RegExp(searchText, "i");
+    return posts.filter(
+      (post) =>
+        searchRegex.test(post.creator.username) ||
+        searchRegex.test(post.tag) ||
+        searchRegex.test(post.topic)
+    );
+  };
+
+  const handleSearchChange = (e) => {
+    clearTimeout(searchTimeout);
+    setSearchText(e.target.value);
+    // Debounce
+    setSearchTimeout(
+      setTimeout(() => {
+        const searchResult = filterTopics(e.target.value);
+        setSearchedResults(searchResult);
+      }, 500)
+    );
+  };
+  const handleTagClick = (tagname) => {
+    setSearchText(tagname);
+    const searchResult = filterTopics(tagname);
+    setSearchedResults(searchResult);
+  };
 
   return (
     <section className="feed">
@@ -39,7 +67,7 @@ const Feed = () => {
         />
       </form>
       {/*  */}
-      <TalkCardList data={posts} handleTagClick={() => {}} />
+      <TalkCardList data={posts} handleTagClick={handleTagClick} />
     </section>
   );
 };

@@ -2,6 +2,8 @@
 import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { Suspense } from "react";
+
 import Form from "@components/Form";
 const EditTalk = () => {
   const router = useRouter();
@@ -54,13 +56,15 @@ const EditTalk = () => {
     }
   };
   return (
-    <Form
-      type="Edit"
-      post={post}
-      setPost={setPost}
-      submitting={submitting}
-      handleSubmit={updateTalk}
-    />
+    <Suspense>
+      <Form
+        type="Edit"
+        post={post}
+        setPost={setPost}
+        submitting={submitting}
+        handleSubmit={updateTalk}
+      />
+    </Suspense>
   );
 };
 
