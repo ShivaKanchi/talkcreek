@@ -9,10 +9,26 @@ const TopicCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
   const { data: session } = useSession();
   const pathName = usePathname();
   const router = useRouter();
+
+  const handleProfileClick = (user) => {
+    console.log(session?.user.id, "<-->", user._id);
+    if (session) {
+      router.push(
+        `${
+          session?.user.id === user._id
+            ? "/profile"
+            : `/profile${user.username}`
+        }`
+      );
+    } else router.push(`${`/profile/${user.username}`}`);
+  };
   return (
     <div className="prompt_card">
       <div className="flex justify-between items-start gap-5">
-        <div className="flex-1 flex justify-start items-center gap-3 cursor-pointer">
+        <div
+          className="flex-1 flex justify-start items-center gap-3 cursor-pointer"
+          onClick={() => handleProfileClick(post.creator)}
+        >
           <Image
             src={post.creator.image}
             alt="user-image"

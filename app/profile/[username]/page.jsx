@@ -1,53 +1,30 @@
 "use client";
-import { useSession } from "next-auth/react";
 
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
+
 import Profile from "@components/Profile";
 
-const UserProfile = () => {
-  const { data: session } = useSession();
+const UserProfile = ({ params }) => {
+  const searchParams = useSearchParams();
+  const username = searchParams.get("username");
+  const [userPosts, setUserPosts] = useState([]);
 
-  const [posts, setPosts] = useState([]);
-
-  const router = useRouter();
   useEffect(() => {
-    const fetchPosts = async () => {
-      const response = await fetch(`api/users/${session?.user.id}/posts`);
-      const data = await response.json();
-      setPosts(data);
+    const getTopicData = async () => {
+      const res = await fetch(`/api/users/${params?.id}/posts`);
+      const data = await res.json();
+      setUserPosts(data);
     };
-    if (session?.user.id) fetchPosts();
-    console.log("Data fetch for profile", session, posts);
-  }, []);
-  const handleEdit = (post) => {
-    router.push(`/update-talk?id=${post._id}`);
-  };
-  const handleDelete = async (post) => {
-    const hasConfirmed = confirm(
-      "Are you sure you want to delete this prompt?"
-    );
+    if (params?.username) getTopicData();
+  }, [params.username]);
 
-    if (hasConfirmed) {
-      try {
-        await fetch(`/api/talk/${post._id.toString()}`, {
-          method: "DELETE",
-        });
-
-        const filteredPosts = posts.filter((p) => p._id !== post.id);
-        setPosts(filteredPosts);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
   return (
     <Profile
       name={username}
-      desc="Welcome to your personalized profile page"
-      data={posts}
-      handleEdit={handleEdit}
-      handleDelete={handleDelete}
+      desc={`Welcome to ${username}'s personalized profile page. Explore ${username}'s interesting topics and views.`}
+      data={userPosts}
     />
   );
 };

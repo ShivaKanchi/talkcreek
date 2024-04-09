@@ -1,8 +1,8 @@
 "use client";
 import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
 import { Suspense } from "react";
+import { useEffect, useState } from "react";
 
 import Form from "@components/Form";
 const EditTalk = () => {
