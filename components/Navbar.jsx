@@ -7,7 +7,7 @@ import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
 const Navbar = () => {
   const { data: session } = useSession();
-  // console.log(session);
+  console.log(session);
   const isUserLoggedIn = true;
   const [providers, setProviders] = useState(null);
   const [toggleDropdown, setToggleDropdown] = useState(false);
@@ -44,7 +44,11 @@ const Navbar = () => {
             </button>
             <Link href="/profile">
               <Image
-                src={session?.user.image}
+                src={
+                  session?.user.image
+                    ? session.user.image
+                    : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                }
                 width={37}
                 height={37}
                 className="rounded-full"
@@ -56,14 +60,19 @@ const Navbar = () => {
           <>
             {providers &&
               Object.values(providers).map((provider) => (
-                <button
-                  type="button"
-                  key={provider.name}
-                  onClick={() => signIn(provider.id)}
-                  className="black_btn"
-                >
-                  Sign In
-                </button>
+                <div className="flex gap-3 md:gap-5" key={provider.name}>
+                  <Link href="/sign-up" className="black_btn">
+                    Sign Up
+                  </Link>
+                  <button
+                    type="button"
+                    key={provider.name}
+                    onClick={() => signIn(provider.id)}
+                    className="black_btn"
+                  >
+                    Sign In
+                  </button>
+                </div>
               ))}
           </>
         )}

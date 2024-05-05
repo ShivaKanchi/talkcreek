@@ -5,7 +5,7 @@ const nextConfig = {
         missingSuspenseWithCSRBailout: false,
     },
     images: {
-      domains: ['lh3.googleusercontent.com'],
+      domains: ['lh3.googleusercontent.com','cdn.pixabay.com'],
     },
     webpack(config) {
       config.experiments = {

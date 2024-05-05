@@ -1,17 +1,22 @@
 import { connectDB } from "@utils/database";
-// import USer from "@model/user";
+import bcrypt from "bcryptjs";
+import User from "@model/user";
 
 export const POST = async (req) => {
-  const { username, email, password } = await req.json();
+  const { username, email, password, image } = await req.json();
   try {
     await connectDB();
-    const newUser = new USer({
-      creator: userId,
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = new User({
+      email,
       username,
-      tag,
+      password: hashedPassword,
+      image: image
+        ? image
+        : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
     });
-
-    await newUser.save();
+    console.log(email, "\n", username, "\n", password, "\n", hashedPassword);
+    await newUser.save(newUser);
     return new Response(JSON.stringify(newUser), { status: 201 });
   } catch (error) {
     console.log(error);

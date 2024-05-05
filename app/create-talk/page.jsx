@@ -12,7 +12,7 @@ const createTalk = () => {
     tag: "",
   });
   const createTalk = async (e) => {
-    console.log("body", {
+    console.log("body me jara hai", {
       userId: session?.user.id,
       talk: post.talk,
       tag: post.tag,
